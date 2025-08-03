@@ -23,9 +23,10 @@ class BaselineTrainer:
         return (
             ppo.PPOConfig()
             .environment(env=self.env_id)
-            .training(model=model_config)
-            .rollouts(num_rollout_workers=0)
+            .rl_module(model_config=model_config)
+            .env_runners(num_env_runners=0)
             .framework("torch")
+            .api_stack(enable_rl_module_and_learner=True, enable_env_runner_and_connector_v2=True)
         )
     
     def train(self, steps: int, logdir: str, run_name: str = "baseline") -> str:
@@ -45,13 +46,17 @@ class BaselineTrainer:
         wandb.init(project=self.project_name, name=run_name, dir=logdir)
         
         cfg = self.setup_config()
-        self.algo = cfg.build()
+        self.algo = cfg.build_algo()
         
         while self.algo._counters.get("timesteps_total", 0) < steps:
             result = self.algo.train()
+            # Handle different possible result keys
+            episode_reward = result.get("episode_reward_mean", result.get("env_runners/episode_reward_mean", 0))
+            timesteps = result.get("timesteps_total", result.get("counters/num_env_steps_sampled_lifetime", 0))
+            
             wandb.log({
-                "episode_reward_mean": result["episode_reward_mean"],
-                "timesteps_total": result["timesteps_total"],
+                "episode_reward_mean": episode_reward,
+                "timesteps_total": timesteps,
             })
         
         checkpoint_path = os.path.join(logdir, "baseline.pt")

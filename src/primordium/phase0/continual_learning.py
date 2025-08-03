@@ -58,8 +58,11 @@ class SEALTrainer:
         Returns:
             Policy state dictionary for SEAL initialization
         """
-        base_config = ppo.PPOConfig().environment(self.env_id).framework("torch")
-        base_algo = base_config.build()
+        base_config = (ppo.PPOConfig()
+                      .environment(self.env_id)
+                      .framework("torch")
+                      .api_stack(enable_rl_module_and_learner=True, enable_env_runner_and_connector_v2=True))
+        base_algo = base_config.build_algo()
         base_algo.restore(checkpoint_path)
         
         return base_algo.get_policy().get_state()
@@ -143,8 +146,11 @@ class SEALTrainer:
         for i, checkpoint_path in enumerate(checkpoints):
             try:
                 # Load and evaluate each checkpoint
-                config = ppo.PPOConfig().environment(self.env_id).framework("torch")
-                algo = config.build()
+                config = (ppo.PPOConfig()
+                         .environment(self.env_id)
+                         .framework("torch")
+                         .api_stack(enable_rl_module_and_learner=True, enable_env_runner_and_connector_v2=True))
+                algo = config.build_algo()
                 algo.restore(checkpoint_path)
                 
                 # Placeholder evaluation (replace with actual env rollouts)

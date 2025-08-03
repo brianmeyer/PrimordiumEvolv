@@ -52,7 +52,7 @@ class SEALPPO:
     def __init__(self, config: PPOConfig, env_id: str):
         self.config = config
         self.env_id = env_id
-        self.base_ppo = config.build()
+        self.base_ppo = config.build_algo()
         self.replay_buffer = SEALReplayBuffer(capacity=50000)
         
     def train(self) -> Dict[str, Any]:

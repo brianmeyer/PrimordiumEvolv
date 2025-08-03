@@ -41,25 +41,32 @@ class NeuralArchitectureSearch:
         run_name = f"nas-{architecture}"
         wandb.init(project=self.project_name, name=run_name, dir=output_dir, reinit=True)
         
+        # Extract model config and use new API
+        arch_config = self.architecture_configs[architecture]
+        model_config = arch_config.get("model", {})
+        
         cfg = (
             ppo.PPOConfig()
             .environment(self.env_id)
-            .training(**self.architecture_configs[architecture])
-            .rollouts(num_rollout_workers=0)
+            .rl_module(model_config=model_config)
+            .env_runners(num_env_runners=0)
             .framework("torch")
+            .api_stack(enable_rl_module_and_learner=True, enable_env_runner_and_connector_v2=True)
         )
         
-        algo = cfg.build()
+        algo = cfg.build_algo()
         best_reward = -1e9
         
         while algo._counters.get("timesteps_total", 0) < steps:
             result = algo.train()
-            reward = result["episode_reward_mean"]
+            # Handle different possible result keys
+            reward = result.get("episode_reward_mean", result.get("env_runners/episode_reward_mean", 0))
+            timesteps = result.get("timesteps_total", result.get("counters/num_env_steps_sampled_lifetime", 0))
             best_reward = max(best_reward, reward)
             
             wandb.log({
                 "episode_reward_mean": reward,
-                "timesteps_total": result["timesteps_total"],
+                "timesteps_total": timesteps,
                 "best_reward": best_reward
             })
         
