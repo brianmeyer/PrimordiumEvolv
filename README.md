@@ -21,9 +21,9 @@ Phase 0 establishes the foundation through baseline RL, architecture search, and
 
 ### Quick Start
 
-1. **Install dependencies:**
+1. **Install dependencies with MIT SEAL:**
 ```bash
-pip install -r requirements.txt
+python scripts/install_seal.py
 ```
 
 2. **Run baseline training:**
@@ -36,16 +36,16 @@ python scripts/run_baseline.py --steps 50000
 python scripts/run_nas.py --budget 8 --trial-steps 10000
 ```
 
-4. **Fine-tune with continual learning:**
+4. **Fine-tune with MIT SEAL continual learning:**
 ```bash
-python scripts/run_continual.py --checkpoint runs/baseline/baseline.pt --steps 5000 --ewc-lambda 1000
+python scripts/run_continual.py --checkpoint runs/baseline/baseline.pt --steps 5000 --replay-ratio 0.3
 ```
 
 ### Components
 
 - **BaselineTrainer**: Standard PPO training with configurable architectures
 - **NeuralArchitectureSearch**: Automated discovery of optimal network structures
-- **ContinualRLTrainer**: Elastic Weight Consolidation (EWC) for preventing catastrophic forgetting
+- **SEALTrainer**: MIT SEAL continual learning (commit 8fe0c2e) with 70% on-policy + 30% replay
 
 ### Configuration
 
@@ -60,7 +60,7 @@ See `docs/phase0.md` for detailed documentation.
 - **Isaac Lab**: Simulation environment
 - **Ray RLlib**: Distributed RL training
 - **Weights & Biases**: Experiment tracking
-- **PyTorch**: Deep learning framework for EWC implementation
+- **MIT SEAL**: Continual RL with commit 8fe0c2e (Ray 2.4.0 + NumPy 1.26.x)
 
 ## Roadmap
 

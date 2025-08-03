@@ -1,17 +1,17 @@
 # PrimordiumEvolv Phase 0 Dependencies
-ray[rllib]>=2.8.0
+ray[rllib]==2.4.0  # Exact version for SEAL compatibility
 wandb>=0.16.0
-torch>=2.0.0
-numpy>=1.24.0
+torch==2.3.0  # Specified Torch version
+numpy==1.26.4  # Required for MIT SEAL commit 8fe0c2e
 isaac-lab>=1.0.0
 
-# Continual Learning Dependencies
-# Note: EWC implementation is built-in, no additional packages needed
-# Optional: For advanced continual learning research
-# continual-ai-core>=0.1.0  # Uncomment if using ContinualAI library
+# MIT SEAL Dependencies (commit 8fe0c2e Apr-09-2024)
+# Install from: git+https://github.com/mit-seal/seal-rl.git@8fe0c2e
+# seal-rl>=0.1.0  # Uncomment after installing from git
 
 # Development dependencies
 pytest>=7.0.0
 black>=23.0.0
 flake8>=6.0.0
-pyyaml>=6.0  # For configuration files
+pyyaml>=6.0
+gymnasium>=0.28.0  # For environment compatibility
