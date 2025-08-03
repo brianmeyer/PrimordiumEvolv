@@ -19,7 +19,7 @@ def main():
     parser.add_argument("--checkpoint", required=True, help="Path to base PPO model checkpoint")
     parser.add_argument("--steps", type=int, default=5000, help="Number of SEAL fine-tuning steps")
     parser.add_argument("--replay-ratio", type=float, default=0.3, 
-                       help="Replay buffer ratio (default 0.3 = 30% replay, 70% on-policy)")
+                       help="Replay buffer ratio (default 0.3 = 30%% replay, 70%% on-policy)")
     parser.add_argument("--quantize", action="store_true", 
                        help="Quantize model to INT8 after training (Phase 1 prep)")
     parser.add_argument("--env", type=str, default="Isaac-Lab-ArmReach-v0", help="Environment ID")

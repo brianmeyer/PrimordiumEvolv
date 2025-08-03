@@ -23,9 +23,16 @@ try:
         pass
     
     SEAL_AVAILABLE = True
+    print("✅ MIT SEAL imported from external package")
 except ImportError:
-    SEAL_AVAILABLE = False
-    print("Warning: MIT SEAL not found. Install from: git+https://github.com/mit-seal/seal-rl.git@8fe0c2e")
+    # Fallback to built-in implementation
+    try:
+        from .seal_implementation import SEALPPO, ContinualTrainer
+        SEAL_AVAILABLE = True
+        print("✅ Using built-in SEAL implementation")
+    except ImportError:
+        SEAL_AVAILABLE = False
+        print("❌ Warning: MIT SEAL not found. Install from: git+https://github.com/mit-seal/seal-rl.git@8fe0c2e")
 
 
 class SEALTrainer:

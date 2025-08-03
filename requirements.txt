@@ -1,5 +1,5 @@
 # PrimordiumEvolv Phase 0 Dependencies
-ray[rllib]==2.4.0  # Exact version for SEAL compatibility
+ray[rllib]>=2.32.0  # Updated for compatibility with current versions
 wandb>=0.16.0
 torch==2.3.0  # Specified Torch version
 numpy==1.26.4  # Required for MIT SEAL commit 8fe0c2e
