@@ -38,14 +38,14 @@ python scripts/run_nas.py --budget 8 --trial-steps 10000
 
 4. **Fine-tune with continual learning:**
 ```bash
-python scripts/run_seal.py --checkpoint runs/baseline/baseline.pt --steps 5000
+python scripts/run_continual.py --checkpoint runs/baseline/baseline.pt --steps 5000 --ewc-lambda 1000
 ```
 
 ### Components
 
 - **BaselineTrainer**: Standard PPO training with configurable architectures
 - **NeuralArchitectureSearch**: Automated discovery of optimal network structures
-- **SEALTrainer**: MIT SEAL continual learning for preventing catastrophic forgetting
+- **ContinualRLTrainer**: Elastic Weight Consolidation (EWC) for preventing catastrophic forgetting
 
 ### Configuration
 
@@ -60,7 +60,7 @@ See `docs/phase0.md` for detailed documentation.
 - **Isaac Lab**: Simulation environment
 - **Ray RLlib**: Distributed RL training
 - **Weights & Biases**: Experiment tracking
-- **MIT SEAL**: Continual learning (optional)
+- **PyTorch**: Deep learning framework for EWC implementation
 
 ## Roadmap
 

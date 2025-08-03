@@ -24,11 +24,12 @@ The Phase 0 framework consists of three main components:
 - Random search with configurable budget
 - Automatic best model selection and saving
 
-### SEALTrainer (`src/primordium/phase0/continual_learning.py`)
-- MIT SEAL implementation for continual learning
+### ContinualRLTrainer (`src/primordium/phase0/continual_learning.py`)
+- Elastic Weight Consolidation (EWC) for continual learning
 - Prevents catastrophic forgetting during fine-tuning
-- Policy state management and restoration
-- Evaluation of forgetting metrics
+- Fisher Information Matrix computation for parameter importance
+- Multi-task learning with regularization
+- Evaluation of forgetting metrics across tasks
 
 ## Usage
 
@@ -42,9 +43,9 @@ python scripts/run_baseline.py --steps 50000 --run-name my_baseline
 python scripts/run_nas.py --budget 8 --trial-steps 10000
 ```
 
-### 3. Continual Learning
+### 3. Continual Learning with EWC
 ```bash
-python scripts/run_seal.py --checkpoint runs/baseline/baseline.pt --steps 5000
+python scripts/run_continual.py --checkpoint runs/baseline/baseline.pt --steps 5000 --ewc-lambda 1000
 ```
 
 ## Configuration
@@ -67,7 +68,7 @@ Core dependencies:
 - Ray RLlib for distributed RL training
 - Isaac Lab for simulation environments
 - Weights & Biases for experiment tracking
-- MIT SEAL for continual learning (optional)
+- PyTorch for EWC continual learning implementation
 
 See `requirements.txt` for complete dependency list.
 

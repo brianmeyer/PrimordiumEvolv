@@ -4,9 +4,14 @@ wandb>=0.16.0
 torch>=2.0.0
 numpy>=1.24.0
 isaac-lab>=1.0.0
-seal-continual>=0.1.0
+
+# Continual Learning Dependencies
+# Note: EWC implementation is built-in, no additional packages needed
+# Optional: For advanced continual learning research
+# continual-ai-core>=0.1.0  # Uncomment if using ContinualAI library
 
 # Development dependencies
 pytest>=7.0.0
 black>=23.0.0
 flake8>=6.0.0
+pyyaml>=6.0  # For configuration files
