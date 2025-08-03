@@ -1,0 +1,36 @@
+# Default training configurations for PrimordiumEvolv Phase 0
+
+baseline:
+  steps: 50000
+  model:
+    fcnet_hiddens: [256, 256]
+  rollout_workers: 0
+  framework: "torch"
+
+nas:
+  budget: 8
+  trial_steps: 10000
+  architectures:
+    mlp:
+      model:
+        fcnet_hiddens: [256, 256]
+    lstm:
+      model:
+        use_lstm: true
+        lstm_cell_size: 256
+    large_mlp:
+      model:
+        fcnet_hiddens: [512, 512, 256]
+    small_mlp:
+      model:
+        fcnet_hiddens: [128, 128]
+
+seal:
+  fine_tune_steps: 5000
+  continual_learning:
+    regularization_strength: 0.1
+    memory_buffer_size: 1000
+
+wandb:
+  project: "primordium-phase0"
+  entity: null  # Set to your wandb username/org

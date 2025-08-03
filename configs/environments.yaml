@@ -1,0 +1,43 @@
+# Environment configurations for different Isaac Lab tasks
+
+environments:
+  "Isaac-Lab-ArmReach-v0":
+    description: "Robotic arm reaching task"
+    action_space: "continuous"
+    observation_space: "vector"
+    max_episode_steps: 1000
+    success_threshold: 0.8
+    
+  "Isaac-Lab-Manipulation-v0":
+    description: "General manipulation task"
+    action_space: "continuous" 
+    observation_space: "vector"
+    max_episode_steps: 1500
+    success_threshold: 0.75
+    
+  "Isaac-Lab-Navigation-v0":
+    description: "Mobile robot navigation"
+    action_space: "continuous"
+    observation_space: "vector" 
+    max_episode_steps: 2000
+    success_threshold: 0.9
+
+# Training parameters per environment
+training_params:
+  "Isaac-Lab-ArmReach-v0":
+    lr: 3e-4
+    batch_size: 256
+    gamma: 0.99
+    gae_lambda: 0.95
+    
+  "Isaac-Lab-Manipulation-v0":
+    lr: 1e-4
+    batch_size: 512
+    gamma: 0.995
+    gae_lambda: 0.98
+    
+  "Isaac-Lab-Navigation-v0":
+    lr: 5e-4
+    batch_size: 128
+    gamma: 0.99
+    gae_lambda: 0.95
